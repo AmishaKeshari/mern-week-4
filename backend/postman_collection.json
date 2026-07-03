@@ -1,0 +1,38 @@
+{
+  "info": {
+    "name": "MERN Week 4 - E-Commerce API",
+    "description": "Auth, Products (admin CRUD), Orders. Set {{token}} after logging in.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        { "name": "Register", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/api/auth/register", "body": { "mode": "raw", "raw": "{\n  \"name\": \"Jane\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"secret123\"\n}" } } },
+        { "name": "Login", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{baseUrl}}/api/auth/login", "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@shop.com\",\n  \"password\": \"admin123\"\n}" } } }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        { "name": "Get All Products", "request": { "method": "GET", "url": "{{baseUrl}}/api/products" } },
+        { "name": "Search Products", "request": { "method": "GET", "url": "{{baseUrl}}/api/products?search=mouse" } },
+        { "name": "Create Product (admin)", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/products", "body": { "mode": "raw", "raw": "{\n  \"name\": \"Desk Lamp\",\n  \"description\": \"LED lamp\",\n  \"price\": 29.99,\n  \"category\": \"Lighting\",\n  \"countInStock\": 20\n}" } } },
+        { "name": "Update Product (admin)", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/products/PASTE_ID", "body": { "mode": "raw", "raw": "{\n  \"price\": 24.99\n}" } } },
+        { "name": "Delete Product (admin)", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/products/PASTE_ID" } }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        { "name": "Place Order", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/orders", "body": { "mode": "raw", "raw": "{\n  \"items\": [\n    { \"product\": \"PASTE_PRODUCT_ID\", \"quantity\": 2 }\n  ]\n}" } } },
+        { "name": "My Orders", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/orders/mine" } },
+        { "name": "All Orders (admin)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/api/orders" } }
+      ]
+    }
+  ]
+}
